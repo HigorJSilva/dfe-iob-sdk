@@ -95,7 +95,7 @@ class HttpClient
     }
 
     /**
-     * Envia uma requisição multipart/form-data (upload de arquivo).
+     * Envia uma requisição POST multipart/form-data (upload de arquivo).
      *
      * @param array<array{name: string, contents: mixed, filename?: string}> $multipart
      * @param array<string, mixed> $headers
@@ -103,12 +103,34 @@ class HttpClient
      */
     public function postMultipart(string $path, array $multipart, array $headers = []): array
     {
-        $mergedHeaders = $this->mergeHeaders($headers);
-        unset($mergedHeaders['Content-Type']); // o Guzzle define o boundary automaticamente
+        return $this->sendMultipart('POST', $path, $multipart, $headers);
+    }
 
-        return $this->send('POST', $path, [
-            'headers'    => $mergedHeaders,
-            'multipart'  => $multipart,
+    /**
+     * Envia uma requisição PUT multipart/form-data (upload de arquivo).
+     *
+     * @param array<array{name: string, contents: mixed, filename?: string}> $multipart
+     * @param array<string, mixed> $headers
+     * @return array<string, mixed>
+     */
+    public function putMultipart(string $path, array $multipart, array $headers = []): array
+    {
+        return $this->sendMultipart('PUT', $path, $multipart, $headers);
+    }
+
+    /**
+     * @param array<array{name: string, contents: mixed, filename?: string}> $multipart
+     * @param array<string, mixed> $headers
+     * @return array<string, mixed>
+     */
+    private function sendMultipart(string $method, string $path, array $multipart, array $headers): array
+    {
+        $mergedHeaders = $this->mergeHeaders($headers);
+        unset($mergedHeaders['Content-Type']); // Guzzle define o boundary automaticamente
+
+        return $this->send($method, $path, [
+            'headers'   => $mergedHeaders,
+            'multipart' => $multipart,
         ]);
     }
 
