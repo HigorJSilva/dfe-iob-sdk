@@ -1,0 +1,28 @@
+# Composer
+/vendor/
+composer.phar
+
+# Environment / Sensitive
+.env
+.env.test
+!.env.example
+!.env.test.example
+
+# Testing
+.phpunit.result.cache
+/tests/_output/
+/tests/_support/_generated/
+
+# IDE and Editor Files
+/.idea/
+/.vscode/
+*.swp
+.DS_Store
+
+# Logs
+*.log
+
+#Agents
+.claude
+
+
