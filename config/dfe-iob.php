@@ -8,7 +8,7 @@ return [
     | Em produção, remova o prefixo "dev-" das URLs.
     */
     'usm_base_url' => env('IOB_USM_BASE_URL', 'https://development-usm-svc-app.iob.com.br'),
-    'dfe_nfe_base_url' => env('IOB_DFE_NFE_BASE_URL', 'https://dev-dfe.nfe.iob.com.br'),
+    'dfe_nfe_base_url' => env('IOB_DFE_NFE_BASE_URL', 'https://dev-dfe-nfe.iob.com.br'),
     'dfe_nfse_base_url' => env('IOB_DFE_NFSE_BASE_URL', 'https://dev-dfe-nfse.iob.com.br'),
     'dfe_cte_base_url' => env('IOB_DFE_CTE_BASE_URL', 'https://dev-dfe-cte.iob.com.br'),
     'adm_base_url' => env('IOB_ADM_BASE_URL', 'https://dev-dfe-adm.iob.com.br'),
