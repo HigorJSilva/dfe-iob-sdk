@@ -17,14 +17,18 @@ class NfeResource extends BaseResource
     /**
      * Emite uma NF-e.
      *
+     * Nota: a API exige os headers x-api-key (já configurado no cliente) e BusinessId,
+     * apesar de a documentação oficial não listá-los como obrigatórios neste endpoint.
+     *
      * @param array<string, mixed> $data                Payload conforme AddNfeRequest
+     * @param string               $businessId          ID do negócio (header obrigatório)
      * @param bool                 $validarSchema        Valida o XML contra o schema (padrão: true)
      * @param bool                 $consultarStatusSefaz Consulta status SEFAZ no monitor (padrão: false)
      * @return array<string, mixed>
      */
-    public function emitir(array $data, bool $validarSchema = true, bool $consultarStatusSefaz = false): array
+    public function emitir(array $data, string $businessId, bool $validarSchema = true, bool $consultarStatusSefaz = false): array
     {
-        return $this->client->post('/api/Nfe', $data, query: [
+        return $this->client->post('/api/Nfe', $data, headers: ['BusinessId' => $businessId], query: [
             'validarSchema'        => $validarSchema ? 'true' : 'false',
             'consultarStatusSefaz' => $consultarStatusSefaz ? 'true' : 'false',
         ]);

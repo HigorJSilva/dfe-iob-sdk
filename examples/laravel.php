@@ -38,12 +38,10 @@ use Emitte\DfeIob\Facades\DfeIob;
 // -----------------------------------------------------------------------------
 
 // Emitir
-$resposta = DfeIob::nfe()->emitir([
-    'idIntegracao' => 'pedido-001',
-    'idAplicacao'  => config('dfe-iob.adm.client_id'),
-    'businessId'   => 'SEU_BUSINESS_ID',
-    // ... demais campos do payload
-]);
+$resposta = DfeIob::nfe()->emitir(
+    data:       ['idIntegracao' => 'pedido-001', /* ... demais campos */],
+    businessId: 'SEU_BUSINESS_ID',
+);
 
 $idNota = $resposta['data']['id'];
 
@@ -107,12 +105,10 @@ DfeIob::nfe()->registrarInsucessoEntrega($idNota, [
 // -----------------------------------------------------------------------------
 
 // Emitir
-$resposta = DfeIob::nfce()->emitir([
-    'idIntegracao' => 'venda-001',
-    'idAplicacao'  => 'SUA_ID_APLICACAO',
-    'businessId'   => 'SEU_BUSINESS_ID',
-    // ... campos conforme AddNfceRequest
-]);
+$resposta = DfeIob::nfce()->emitir(
+    data:       ['idIntegracao' => 'venda-001', /* ... campos conforme AddNfceRequest */],
+    businessId: 'SEU_BUSINESS_ID',
+);
 
 // Validar payload sem emitir
 $erros = DfeIob::nfce()->validar($payload, 'SEU_BUSINESS_ID', 'SEU_TENANT_ID');
@@ -127,10 +123,10 @@ $pdf = DfeIob::nfce()->downloadPdf($idNota, 'SUA_ID_APLICACAO', 'SEU_BUSINESS_ID
 // NFS-e
 // -----------------------------------------------------------------------------
 
-$resposta = DfeIob::nfse()->emitir([
-    'idIntegracao' => 'servico-001',
-    // ... campos conforme AddNfseRequest
-]);
+$resposta = DfeIob::nfse()->emitir(
+    data:       ['idIntegracao' => 'servico-001', /* ... campos conforme AddNfseRequest */],
+    businessId: 'SEU_BUSINESS_ID',
+);
 
 $idNfse = $resposta['data']['id'];
 
@@ -146,18 +142,18 @@ $painel = DfeIob::nfse()->consultarPorPeriodoPainel('12345678000195', '01-04-202
 // CT-e
 // -----------------------------------------------------------------------------
 
-$resposta = DfeIob::cte()->emitir([
-    'idIntegracao' => 'transporte-001',
-    // ... campos conforme AddCteRequest
-]);
+$resposta = DfeIob::cte()->emitir(
+    data:       ['idIntegracao' => 'transporte-001', /* ... campos conforme AddCteRequest */],
+    businessId: 'SEU_BUSINESS_ID',
+);
 
 $idCte = $resposta['data']['id'];
 
 // Carta de Correção CT-e
-DfeIob::cte()->solicitarCartaCorrecao($idCte, [/* CartaCorrecaoCteRequest */], 'SUA_API_KEY');
+DfeIob::cte()->solicitarCartaCorrecao($idCte, [/* CartaCorrecaoCteRequest */], 'SEU_BUSINESS_ID');
 
-$xml = DfeIob::cte()->downloadXml($idCte, 'SUA_API_KEY');
-$pdf = DfeIob::cte()->downloadPdf($idCte, 'SUA_API_KEY');
+$xml = DfeIob::cte()->downloadXml($idCte, 'SEU_BUSINESS_ID');
+$pdf = DfeIob::cte()->downloadPdf($idCte, 'SEU_BUSINESS_ID');
 
 // -----------------------------------------------------------------------------
 // ADM — Aplicação

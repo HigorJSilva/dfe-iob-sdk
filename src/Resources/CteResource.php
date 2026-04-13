@@ -20,13 +20,17 @@ class CteResource extends BaseResource
     /**
      * Emite um CT-e.
      *
-     * @param array<string, mixed> $data        Payload conforme AddCteRequest
+     * Nota: a API exige os headers x-api-key (já configurado no cliente) e BusinessId,
+     * apesar de a documentação oficial não listá-los como obrigatórios neste endpoint.
+     *
+     * @param array<string, mixed> $data          Payload conforme AddCteRequest
+     * @param string               $businessId    ID do negócio (header obrigatório)
      * @param bool                 $validarSchema Valida o XML contra o schema (padrão: true)
      * @return array<string, mixed>
      */
-    public function emitir(array $data, bool $validarSchema = true): array
+    public function emitir(array $data, string $businessId, bool $validarSchema = true): array
     {
-        return $this->client->post('/api/Cte', $data, query: [
+        return $this->client->post('/api/Cte', $data, headers: ['BusinessId' => $businessId], query: [
             'validarSchema' => $validarSchema ? 'true' : 'false',
         ]);
     }

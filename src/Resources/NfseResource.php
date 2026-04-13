@@ -17,13 +17,17 @@ class NfseResource extends BaseResource
     /**
      * Emite uma NFS-e.
      *
-     * @param array<string, mixed> $data         Payload conforme AddNfseRequest
+     * Nota: a API exige os headers x-api-key (já configurado no cliente) e BusinessId,
+     * apesar de a documentação oficial não listá-los como obrigatórios neste endpoint.
+     *
+     * @param array<string, mixed> $data          Payload conforme AddNfseRequest
+     * @param string               $businessId    ID do negócio (header obrigatório)
      * @param bool                 $validarSchema Valida o XML contra o schema (padrão: true)
      * @return array<string, mixed>
      */
-    public function emitir(array $data, bool $validarSchema = true): array
+    public function emitir(array $data, string $businessId, bool $validarSchema = true): array
     {
-        return $this->client->post('/api/Nfse', $data, query: [
+        return $this->client->post('/api/Nfse', $data, headers: ['BusinessId' => $businessId], query: [
             'validarSchema' => $validarSchema ? 'true' : 'false',
         ]);
     }
