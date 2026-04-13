@@ -85,11 +85,12 @@ DfeIob::nfe()->inutilizar([
     'idAplicacao'   => 'SUA_ID_APLICACAO',
     'businessId'    => 'SEU_BUSINESS_ID',
     'cnpj'          => '12345678000195',
+    'ano'           => '26',
     'serie'         => 1,
     'numeroInicial' => 10,
     'numeroFinal'   => 15,
     'justificativa' => 'Falha no sistema.',
-]);
+], 'SEU_BUSINESS_ID');
 
 // Insucesso de entrega
 DfeIob::nfe()->registrarInsucessoEntrega($idNota, [

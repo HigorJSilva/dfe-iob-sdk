@@ -167,12 +167,15 @@ class NfceResource extends BaseResource
     /**
      * Inutiliza uma faixa de números de NFC-e.
      *
-     * @param array<string, mixed> $data Payload conforme InutilizarRequest
+     * @param array<string, mixed> $data       Payload conforme InutilizarRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function inutilizar(array $data): array
+    public function inutilizar(array $data, string $businessId): array
     {
-        return $this->client->post('/api/Nfce/inutilizar', $data);
+        return $this->client->post('/api/Nfce/inutilizar', $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**

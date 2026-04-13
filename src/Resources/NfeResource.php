@@ -182,12 +182,15 @@ class NfeResource extends BaseResource
     /**
      * Inutiliza uma faixa de números de NF-e.
      *
-     * @param array<string, mixed> $data Payload conforme InutilizarRequest
+     * @param array<string, mixed> $data       Payload conforme InutilizarRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function inutilizar(array $data): array
+    public function inutilizar(array $data, string $businessId): array
     {
-        return $this->client->post('/api/Nfe/inutilizar', $data);
+        return $this->client->post('/api/Nfe/inutilizar', $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**
