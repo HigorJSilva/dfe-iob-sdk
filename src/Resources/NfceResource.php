@@ -128,12 +128,15 @@ class NfceResource extends BaseResource
     /**
      * Cancela uma NFC-e emitida.
      *
-     * @param array<string, mixed> $data Payload conforme CancelNfceRequest
+     * @param array<string, mixed> $data       Payload conforme CancelNfceRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function cancelar(string $idNota, array $data): array
+    public function cancelar(string $idNota, array $data, string $businessId): array
     {
-        return $this->client->post("/api/Nfce/cancelar/{$idNota}", $data);
+        return $this->client->post("/api/Nfce/cancelar/{$idNota}", $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**

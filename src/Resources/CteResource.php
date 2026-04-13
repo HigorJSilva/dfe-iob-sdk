@@ -152,12 +152,15 @@ class CteResource extends BaseResource
     /**
      * Cancela um CT-e.
      *
-     * @param array<string, mixed> $data Payload conforme CancelCteRequest
+     * @param array<string, mixed> $data       Payload conforme CancelCteRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function cancelar(string $idNota, array $data): array
+    public function cancelar(string $idNota, array $data, string $businessId): array
     {
-        return $this->client->post("/api/Cte/cancelar/{$idNota}", $data);
+        return $this->client->post("/api/Cte/cancelar/{$idNota}", $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**

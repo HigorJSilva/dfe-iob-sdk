@@ -151,12 +151,15 @@ class NfseResource extends BaseResource
     /**
      * Cancela uma NFS-e.
      *
-     * @param array<string, mixed> $data Payload conforme CancelNfseRequest
+     * @param array<string, mixed> $data       Payload conforme CancelNfseRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function cancelar(string $idNota, array $data): array
+    public function cancelar(string $idNota, array $data, string $businessId): array
     {
-        return $this->client->post("/api/Nfse/cancelar/{$idNota}", $data);
+        return $this->client->post("/api/Nfse/cancelar/{$idNota}", $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**
