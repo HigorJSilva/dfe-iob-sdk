@@ -77,10 +77,8 @@ DfeIob::nfe()->cancelar($idNota, [
 // Carta de Correção
 DfeIob::nfe()->solicitarCartaCorrecao($idNota, [
     'idAplicacao' => 'SUA_ID_APLICACAO',
-    'businessId'  => 'SEU_BUSINESS_ID',
-    'correcao'    => 'Corrigir endereço do destinatário.',
-    'sequencia'   => 1,
-]);
+    'correcao'  => 'Corrigir endereço do destinatário.',
+], 'SEU_BUSINESS_ID');
 
 // Inutilizar faixa de numeração
 DfeIob::nfe()->inutilizar([

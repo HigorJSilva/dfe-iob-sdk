@@ -210,12 +210,15 @@ class NfeResource extends BaseResource
     /**
      * Solicita uma Carta de Correção para uma NF-e.
      *
-     * @param array<string, mixed> $data Payload conforme SolicitarCartaCorrecaoRequest
+     * @param array<string, mixed> $data       Payload conforme SolicitarCartaCorrecaoRequest
+     * @param string               $businessId ID do negócio (header obrigatório)
      * @return array<string, mixed>
      */
-    public function solicitarCartaCorrecao(string $idNota, array $data): array
+    public function solicitarCartaCorrecao(string $idNota, array $data, string $businessId): array
     {
-        return $this->client->post("/api/Nfe/correcao/{$idNota}", $data);
+        return $this->client->post("/api/Nfe/correcao/{$idNota}", $data, headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**
@@ -233,11 +236,12 @@ class NfeResource extends BaseResource
 
     /**
      * Baixa o XML de uma Carta de Correção.
-     * Nota: a API não exige headers adicionais neste endpoint.
      */
-    public function downloadXmlCartaCorrecao(string $idNota): string
+    public function downloadXmlCartaCorrecao(string $idNota, string $businessId): string
     {
-        return $this->client->getRaw("/api/Nfe/correcao/{$idNota}/xml");
+        return $this->client->getRaw("/api/Nfe/correcao/{$idNota}/xml", headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     // -------------------------------------------------------------------------
