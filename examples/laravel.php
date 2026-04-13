@@ -70,9 +70,8 @@ return response($pdf, 200)->header('Content-Type', 'application/pdf');
 // Cancelar
 DfeIob::nfe()->cancelar($idNota, [
     'idAplicacao'   => 'SUA_ID_APLICACAO',
-    'businessId'    => 'SEU_BUSINESS_ID',
     'justificativa' => 'Cancelamento a pedido do cliente.',
-]);
+], 'SEU_BUSINESS_ID');
 
 // Carta de Correção
 DfeIob::nfe()->solicitarCartaCorrecao($idNota, [
@@ -224,14 +223,16 @@ $lista = DfeIob::empresa()->listar(['pagina' => 1, 'tamanhoPagina' => 20]);
 
 // Logo — usando o arquivo vindo de um upload Laravel
 $logo = DfeIob::empresa()->adicionarLogo(
+    'cnpj',
     request()->file('logo')->get(),
-    request()->file('logo')->getClientOriginalName(),
+    'SUA_ID_APLICACAO',
 );
 
 // Ou a partir de um caminho local
 DfeIob::empresa()->adicionarLogo(
+    'cnpj',
     fopen(storage_path('app/logo.png'), 'r'),
-    'logo.png',
+    'SUA_ID_APLICACAO',
 );
 
 DfeIob::empresa()->removerLogo('12345678000195');
@@ -246,21 +247,23 @@ $urlLogo = DfeIob::empresa()->baixarLogo('12345678000195');
 $certs = DfeIob::certificado()->listar();
 
 // Cadastrar
-$cert = DfeIob::certificado()->criar([
-    'cpfCnpj'   => '12345678000195',
-    'pfxBase64' => base64_encode(Storage::get('certificados/empresa.pfx')),
-    'senha'     => config('app.cert_password'),
-]);
+$cert = DfeIob::certificado()->criar(
+    'SEU_BUSINESS_ID',
+    'SUA_ID_APLICACAO',
+    config('app.cert_password'),
+    Storage::get('certificados/empresa.pfx')
+);
 
 // Buscar
 $cert = DfeIob::certificado()->buscarPorId('ID_DO_CERTIFICADO');
 
 // Atualizar (renovação)
-DfeIob::certificado()->atualizar([
-    'id'        => 'ID_DO_CERTIFICADO',
-    'pfxBase64' => base64_encode(Storage::get('certificados/novo.pfx')),
-    'senha'     => config('app.cert_password'),
-]);
+DfeIob::certificado()->atualizar(
+    'SEU_BUSINESS_ID',
+    'SUA_ID_APLICACAO',
+    config('app.cert_password'),
+    Storage::get('certificados/empresa.pfx')
+);
 
 // Remover
 DfeIob::certificado()->remover('ID_DO_CERTIFICADO');
@@ -325,7 +328,7 @@ $sdk->nfe()->emitir($payload);
 // =============================================================================
 
 try {
-    $resposta = DfeIob::nfe()->emitir($payload);
+    $resposta = DfeIob::nfe()->emitir($payload, 'SEU_BUSINESS_ID');
 } catch (AuthenticationException $e) {
     // Falha na autenticação ADM (etapas 1, 2 ou 3 do OAuth USM)
     Log::error('Falha na autenticação IOB ADM', ['erro' => $e->getMessage()]);
