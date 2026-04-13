@@ -3,11 +3,11 @@
     "description": "SDK PHP para integração com a API Motor de Documentos Fiscais da IOB",
     "type": "library",
     "license": "MIT",
-    "keywords": ["iob", "dfe", "nfe", "nfce", "nfse", "cte", "fiscal", "sdk"],
+    "keywords": ["iob", "dfe", "nfe", "nfce", "nfse", "cte", "fiscal", "sdk", "dfe iob"],
     "authors": [
         {
-            "name": "Emitte",
-            "email": "dev@emitte.com.br"
+            "name": "Higor Silva",
+            "email": "higor.silva@emitte.com.br"
         }
     ],
     "require": {
