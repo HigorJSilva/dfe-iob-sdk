@@ -73,6 +73,7 @@ class NfceResource extends BaseResource
         string $cpfCnpj,
         string $inicio,
         string $fim,
+        string $businessId,
         ?string $tokenPaginacao = null,
     ): array {
         $query = compact('cpfCnpj', 'inicio', 'fim');
@@ -81,7 +82,9 @@ class NfceResource extends BaseResource
             $query['tokenPaginacao'] = $tokenPaginacao;
         }
 
-        return $this->client->get('/api/Nfce/consulta-periodo', $query);
+        return $this->client->get('/api/Nfce/consulta-periodo', $query, headers: [
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
