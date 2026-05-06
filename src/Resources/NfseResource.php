@@ -25,10 +25,11 @@ class NfseResource extends BaseResource
      * @param bool                 $validarSchema Valida o XML contra o schema (padrão: true)
      * @return array<string, mixed>
      */
-    public function emitir(array $data, string $businessId, bool $validarSchema = true): array
+    public function emitir(array $data, string $businessId, bool $validarSchema = true, ?string $versaoEsquema = null): array
     {
         return $this->client->post('/api/Nfse', $data, headers: ['BusinessId' => $businessId], query: [
             'validarSchema' => $validarSchema ? 'true' : 'false',
+            ...(isset($versaoEsquema) ? ['versaoXsdSchema' => $versaoEsquema] : []),
         ]);
     }
 
