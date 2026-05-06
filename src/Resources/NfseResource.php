@@ -116,25 +116,31 @@ class NfseResource extends BaseResource
     /**
      * Baixa o XML de envio de uma NFS-e.
      */
-    public function downloadXmlEnvio(string $id): string
+    public function downloadXmlEnvio(string $id, string $businessId): string
     {
-        return $this->client->getRaw("/api/Nfse/id/{$id}/xml-envio");
+        return $this->client->getRaw("/api/Nfse/id/{$id}/xml-envio", headers: [
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
      * Baixa o XML de retorno de uma NFS-e.
      */
-    public function downloadXmlRetorno(string $id): string
+    public function downloadXmlRetorno(string $id, string $businessId): string
     {
-        return $this->client->getRaw("/api/Nfse/id/{$id}/xml-retorno");
+        return $this->client->getRaw("/api/Nfse/id/{$id}/xml-retorno", headers: [
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
      * Baixa o PDF (DANFS-e) de uma NFS-e.
      */
-    public function downloadPdf(string $idNota): string
+    public function downloadPdf(string $idNota, string $businessId): string
     {
-        return $this->client->getRaw("/api/Nfse/{$idNota}/pdf");
+        return $this->client->getRaw("/api/Nfse/{$idNota}/pdf", headers: [
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
