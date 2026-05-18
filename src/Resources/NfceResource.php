@@ -93,9 +93,31 @@ class NfceResource extends BaseResource
      * @param array<string, mixed> $data Payload conforme ConsultaPosFalhaComunicacaoSefazNfceRequest
      * @return array<string, mixed>
      */
-    public function consultarSefaz(array $data): array
+    public function consultarSefaz(array $data, string $businessId): array
     {
-        return $this->client->post('/api/Nfce/consultar-sefaz', $data);
+        return $this->client->post('/api/Nfce/consultar-sefaz', $data,  headers: [
+            'businessId'  => $businessId,
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Preview de documentos
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prever o XML de uma NFC-e.
+     */
+    public function preverXml(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfce/preview', $data, headers: ['BusinessId' => $businessId]);
+    }
+
+    /**
+     * Prever o DANFE (PDF) de uma NFC-e.
+     */
+    public function preverPdf(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfce/preview-pdf', $data, headers: ['BusinessId' => $businessId]);
     }
 
     // -------------------------------------------------------------------------
