@@ -42,9 +42,12 @@ class NfseResource extends BaseResource
      *
      * @return array<string, mixed>
      */
-    public function consultarPorId(string $id): array
+    public function consultarPorId(string $id, string $idAplicacao, string $businessId): array
     {
-        return $this->client->get("/api/Nfse/id/{$id}");
+        return $this->client->get("/api/Nfse/id/{$id}", headers: [
+            'idAplicacao' => $idAplicacao,
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
@@ -52,9 +55,12 @@ class NfseResource extends BaseResource
      *
      * @return array<string, mixed>
      */
-    public function consultarPorIdIntegracao(string $idIntegracao): array
+    public function consultarPorIdIntegracao(string $idIntegracao, string $idAplicacao, string $businessId): array
     {
-        return $this->client->get("/api/Nfse/id-integracao/{$idIntegracao}");
+        return $this->client->get("/api/Nfse/id-integracao/{$idIntegracao}", headers: [
+            'idAplicacao' => $idAplicacao,
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
