@@ -76,6 +76,7 @@ class NfseResource extends BaseResource
         string $cpfCnpj,
         string $inicio,
         string $fim,
+        string $businessId,
         ?string $tokenPaginacao = null,
     ): array {
         $query = compact('cpfCnpj', 'inicio', 'fim');
@@ -84,7 +85,9 @@ class NfseResource extends BaseResource
             $query['tokenPaginacao'] = $tokenPaginacao;
         }
 
-        return $this->client->get('/api/Nfse/consulta-periodo', $query);
+        return $this->client->get('/api/Nfse/consulta-periodo', $query, headers: [
+            'businessId'  => $businessId,
+        ]);
     }
 
     /**
@@ -180,9 +183,11 @@ class NfseResource extends BaseResource
      *
      * @return array<string, mixed>
      */
-    public function consultarStatusCancelamento(string $idNota): array
+    public function consultarStatusCancelamento(string $idNota, string $businessId): array
     {
-        return $this->client->get("/api/Nfse/cancelar/{$idNota}/consulta");
+        return $this->client->get("/api/Nfse/cancelar/{$idNota}/consulta", headers: [
+            'BusinessId' => $businessId,
+        ]);
     }
 
     /**
