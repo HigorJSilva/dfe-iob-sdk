@@ -77,6 +77,7 @@ class NfeResource extends BaseResource
         string $cpfCnpj,
         string $inicio,
         string $fim,
+        string $businessId,
         ?string $tokenPaginacao = null,
     ): array {
         $query = compact('cpfCnpj', 'inicio', 'fim');
@@ -85,7 +86,29 @@ class NfeResource extends BaseResource
             $query['tokenPaginacao'] = $tokenPaginacao;
         }
 
-        return $this->client->get('/api/Nfe/consulta-periodo', $query);
+        return $this->client->get('/api/Nfe/consulta-periodo', $query, headers: [
+            'businessId'  => $businessId,
+        ]);
+    }
+
+    // -------------------------------------------------------------------------
+    // Preview de documentos
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prever o XML de uma NF-e.
+     */
+    public function preverXml(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfe/preview', $data, headers: ['BusinessId' => $businessId]);
+    }
+
+    /**
+     * Prever o DANFE (PDF) de uma NF-e.
+     */
+    public function preverPdf(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfe/preview-pdf', $data, headers: ['BusinessId' => $businessId]);
     }
 
     // -------------------------------------------------------------------------
