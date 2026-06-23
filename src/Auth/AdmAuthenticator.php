@@ -87,8 +87,7 @@ class AdmAuthenticator
     {
         $signinToken = $this->fetchSigninToken();
 
-        try {
-            $response = $this->http->post(self::USM_PATH . '/signin', [
+        $options = [
                 'headers' => [
                     'x-api-key'    => $this->xApiKey,
                     'Content-Type' => 'application/json',
@@ -99,12 +98,15 @@ class AdmAuthenticator
                     'client_id'     => $this->clientId,
                     'signin_token'  => $signinToken,
                 ],
-            ]);
+            ];
+
+        try {
+            $response = $this->http->post(self::USM_PATH . '/signin', $options);
 
             $body = json_decode((string) $response->getBody(), true);
         } catch (GuzzleException $e) {
             throw new AuthenticationException(
-                'Falha na etapa 2 da autenticação ADM: ' . $e->getMessage(),
+                'Falha na etapa 2 da autenticação ADM: ' . $e->getMessage() . " BODY: " . json_encode($options),
                 previous: $e,
             );
         }
