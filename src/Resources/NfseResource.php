@@ -161,6 +161,26 @@ class NfseResource extends BaseResource
     }
 
     // -------------------------------------------------------------------------
+    // Preview de documentos
+    // -------------------------------------------------------------------------
+
+    /**
+     * Prever o XML de uma NF-e.
+     */
+    public function preverXml(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfse/preview', $data, headers: ['BusinessId' => $businessId]);
+    }
+
+    /**
+     * Prever o DANFE (PDF) de uma NF-e.
+     */
+    public function preverPdf(array $data, string $businessId): array
+    {
+        return $this->client->post('/api/Nfse/preview-pdf', $data, headers: ['BusinessId' => $businessId]);
+    }
+
+    // -------------------------------------------------------------------------
     // Cancelamento
     // -------------------------------------------------------------------------
 
