@@ -165,7 +165,7 @@ class NfseResource extends BaseResource
     // -------------------------------------------------------------------------
 
     /**
-     * Prever o XML de uma NF-e.
+     * Prever o XML de uma NFS-e.
      */
     public function preverXml(array $data, string $businessId): array
     {
@@ -173,7 +173,7 @@ class NfseResource extends BaseResource
     }
 
     /**
-     * Prever o DANFE (PDF) de uma NF-e.
+     * Prever o DANFE (PDF) de uma NFS-e.
      */
     public function preverPdf(array $data, string $businessId): array
     {
